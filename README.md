@@ -2,37 +2,18 @@
 
 Created by **Dewald Pretorius**.
 
-A read-only PowerShell diagnostic toolkit for Power BI Desktop refresh failures, crashes, slow performance, data-source drivers, gateway state, service connectivity, and recent reliability events.
+The repository includes the original diagnostics and a new `Repair.ps1` helper.
 
-## Checks
+Supported actions:
 
-- Power BI Desktop installation and running processes
-- Process memory usage and duplicate instances
-- Local cache locations and approximate size
-- Installed ODBC drivers and platform architecture
-- On-premises gateway service state
-- DNS and HTTPS connectivity to Power BI services
-- Recent Power BI, Mashup Engine, and Analysis Services events
-
-## Run
+- `Diagnose`
+- `ResetCache`
+- `FlushDns`
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\Microsoft_Power_BI_Desktop_Troubleshooter.ps1"
+.\Repair.ps1 -Action Diagnose
+.\Repair.ps1 -Action ResetCache -WhatIf
+.\Repair.ps1 -Action ResetCache -Confirm
 ```
 
-Reports are saved to `Desktop\PowerBI_Desktop_Troubleshooter_Reports` as both TXT and CSV.
-
-## Scenarios supported
-
-- Desktop crashes or freezes
-- Slow report opening and rendering
-- Data refresh failures
-- Missing or mismatched drivers
-- Gateway connectivity questions
-- Publishing or sign-in connectivity failures
-- Large local caches
-- Mashup Engine and model service errors
-
-## Safety
-
-The script collects diagnostic information only. It does not clear caches, change drivers, alter data sources, or modify Power BI configuration.
+Close Power BI Desktop before cache repair. Existing cache and workspace folders are preserved as timestamped backups. Each run saves pre-change evidence and a log. Source-reviewed for PowerShell 5.1; not runtime-tested against every Power BI Desktop build.
